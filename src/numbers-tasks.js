@@ -50,11 +50,11 @@ function getCircleCircumference(radius) {
  *  -3, 3  => 0
  */
 function getAverage(value1, value2 ) {
-  if (isFinite(value1) && isFinite(value2)) {
-    return (value1 + value2) / 2;
-  } else{
-    return Infinity;
+  if (!isFinite((value1 + value2) / 2)) {
+    return Number.MAX_VALUE;
   }
+
+  return (value1 + value2) / 2;
 }
 
 /**
@@ -259,7 +259,7 @@ function toNumber(value, def) {
  *   0  => 0
  */
 function getCube(num) {
-  return Math.pow(num,3)
+  return num**3
 }
 
 /**
@@ -458,16 +458,7 @@ function getNumberValue(number) {
  * '5'      => false
  */
 function isNumber(number) {
-  if(isNaN(number)){
-    return false;
-  }
-  if(isFinite(number) === false){
-    return false;
-  }
-  if(typeof number !== 'number'){
-    return false;
-  }
-  return true;
+  return typeof number === 'number' && !isNaN(parseFloat(number));
 }
 
 /**
@@ -496,7 +487,7 @@ function isInteger(number)  {
  * 'abcdefgh'      => NaN
  */
 function getFloatOnString(str) {
-  return parseFloat(str)
+  return str.parseFloat(str)
 }
 
 /**
@@ -649,7 +640,11 @@ function getRandomInteger(min, max ) {
  * 3, 4 => 5
  */
 function getHypotenuse(a, b) {
+  if (!isFinite(Math.sqrt(a**2 + b**2))) {
+    return Number.MAX_VALUE;
+  }
   return Math.sqrt(a**2 + b**2)
+
 }
 
 /**
@@ -667,12 +662,12 @@ function getHypotenuse(a, b) {
  */
 function getCountOfOddNumbers(number) {
   let count = 0;
-  for(let i = 0; i < number; i++){
-    if(i % 2 === 1){
+  for(let i = 0; i <= Math.abs(number); i++){
+    if(i % 2 !== 0){
       count ++;
     }
   }
-  return count++
+  return count
 }
 
 module.exports = {
